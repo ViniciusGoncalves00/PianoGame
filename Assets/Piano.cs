@@ -6,10 +6,9 @@ using Random = UnityEngine.Random;
 
 public class Piano : MonoBehaviour
 {
-    [SerializeField] private UI ui;
-    [SerializeField] private AudioManager audioManager;
-    
-    [SerializeField] private Button[] pianoKeys;
+    [SerializeField] private UI _ui;
+    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private Button[] _pianoKeys;
     
     private readonly Color _highlightColor = new Color(0.75f, 0.50f, 0.25f, 1.0f);
     private readonly Color _correctHighlightColor = new Color(0.25f, 0.50f, 0.75f, 1);
@@ -31,14 +30,14 @@ public class Piano : MonoBehaviour
 
     private void Awake()
     {
-        _keysAmount = pianoKeys.Length;
+        _keysAmount = _pianoKeys.Length;
         _squareSpriteRenderer = new Image[_keysAmount];
 
         for (int i = 0; i < _keysAmount; i++)
         {
             var squareValue = i;
-            pianoKeys[i].onClick.AddListener(() => ClickButton(squareValue));
-            _squareSpriteRenderer[i] = pianoKeys[i].GetComponent<Image>();
+            _pianoKeys[i].onClick.AddListener(() => ClickButton(squareValue));
+            _squareSpriteRenderer[i] = _pianoKeys[i].GetComponent<Image>();
         }
     }
 
@@ -58,7 +57,7 @@ public class Piano : MonoBehaviour
 
     private void ClickButton(int answer)
     {
-        audioManager.PlaySound(answer);
+        _audioManager.PlaySound(answer);
         CheckAnswer(answer);
     }
 
@@ -84,7 +83,7 @@ public class Piano : MonoBehaviour
             {
                 _streak++;
             }
-            ui.UpdateUI(_hits, _streak);
+            _ui.UpdateUI(_hits, _streak);
             NextTurn();
         }
     }
@@ -102,7 +101,7 @@ public class Piano : MonoBehaviour
 
     private void ToggleButtonEnabled(bool boolean)
     {
-        foreach (var pianoKey in pianoKeys)
+        foreach (var pianoKey in _pianoKeys)
         {
             pianoKey.enabled = boolean;
         }
@@ -131,7 +130,7 @@ public class Piano : MonoBehaviour
             var originalColor = _squareSpriteRenderer[index].color;
             _squareSpriteRenderer[index].color = _highlightColor;
             
-            audioManager.PlaySound(index);
+            _audioManager.PlaySound(index);
             
             yield return new WaitForSeconds(DelayToBackToOriginalColor);
 
@@ -147,7 +146,7 @@ public class Piano : MonoBehaviour
         var originalColor = _squareSpriteRenderer[index].color;
         _squareSpriteRenderer[index].color = color;
             
-        audioManager.PlaySound(index);
+        _audioManager.PlaySound(index);
             
         yield return new WaitForSeconds(DelayToBackToOriginalColor/2);
 
@@ -159,7 +158,7 @@ public class Piano : MonoBehaviour
     {
         _notesAmount = 0;
         _hits = 0;
-        ui.UpdateUI(_hits, _streak);
+        _ui.UpdateUI(_hits, _streak);
         
         NextTurn();
     }

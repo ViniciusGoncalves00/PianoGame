@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text hits;
-    [SerializeField] private TMP_Text streak;
+    [SerializeField] private TMP_Text  _hits;
+    [SerializeField] private TMP_Text _streak;
 
     public void UpdateUI(int hits, int streak)
     {
-        this.hits.text = hits.ToString();
-        this.streak.text = streak.ToString();
+        _hits.text = hits.ToString();
+        _streak.text = streak.ToString();
     }
 }

@@ -728,9 +728,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593f9cdb81efb5c4d86677b919a27e1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui: {fileID: 1960451317}
-  audioManager: {fileID: 748004599}
-  pianoKeys:
+  _ui: {fileID: 1960451317}
+  _audioManager: {fileID: 748004599}
+  _pianoKeys:
   - {fileID: 875074010}
   - {fileID: 1553536870}
   - {fileID: 1278288955}
@@ -1267,7 +1267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d9d95713c744f4782d5fa2c11950ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClips:
+  _audioClips:
   - {fileID: 8300000, guid: 28956252bd33e4c438c1ed7ae5e73ec1, type: 3}
   - {fileID: 8300000, guid: 6876eb0b505c27949bdeba1bfe148ba9, type: 3}
   - {fileID: 8300000, guid: 7de5708dafe68184ebcd9f6d9f1a3994, type: 3}
@@ -1280,7 +1280,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 718b81c394facb947b06008b217520f5, type: 3}
   - {fileID: 8300000, guid: 71a49ee0787adb34aad9668b22385e64, type: 3}
   - {fileID: 8300000, guid: 07a502f3b79b2d444a6acc2209292f55, type: 3}
-  audioSources: []
 --- !u!4 &748004600
 Transform:
   m_ObjectHideFlags: 0
@@ -2828,8 +2827,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e21e3c250da0aa40a32f7fd67d9051b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hits: {fileID: 1056131451}
-  streak: {fileID: 799564241}
+  _hits: {fileID: 1056131451}
+  _streak: {fileID: 799564241}
 --- !u!4 &1960451318
 Transform:
   m_ObjectHideFlags: 0

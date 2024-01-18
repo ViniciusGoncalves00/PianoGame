@@ -1,55 +1,30 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Pool;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip[] audioClips;
-    [SerializeField] private List<AudioSource> audioSources;
+    [SerializeField] private AudioClip[] _audioClips;
+
+    private ObjectPool<AudioSource> _audioSourcePool;
 
     private void Awake()
     {
-        AddAudioSource();
-    }
-
-    private void AddAudioSource()
-    {
-        var item = gameObject.AddComponent<AudioSource>();
-        audioSources.Add(item);
+        _audioSourcePool = new ObjectPool<AudioSource>(() => gameObject.AddComponent<AudioSource>());
     }
 
     public void PlaySound(int index)
     {
-        var audioClip = audioClips[index];
-            
-        foreach (var audioSource in audioSources)
-        {
-            if (audioSource.isPlaying)
-                continue;
-            
-            PlayAudio(audioSource, audioClip);
-            return;
-        }
-        
-        AddAudioSource();
- 
-        var newAudioSource = audioSources[^1];
-        
-        PlayAudio(newAudioSource, audioClip);
+        StartCoroutine(PlaySoundCoroutine(index));
     }
 
-    private void PlayAudio(AudioSource audioSource, AudioClip audioClip)
+    private IEnumerator PlaySoundCoroutine(int index)
     {
-        audioSource.clip = audioClip;
-        audioSource.Play();
-        StartCoroutine(WaitForAudio(audioSource));
-    }
-
-    private IEnumerator WaitForAudio(AudioSource audioSource)
-    {
-        yield return new WaitForSeconds(audioSource.clip.length);
-
-        audioSource.Stop();
+        var audioClip = _audioClips[index];
+        using var rentedObject = _audioSourcePool.Get(out var audioSource);
+        
+        audioSource.PlayOneShot(audioClip);
+        
+        yield return new WaitForSeconds(audioClip.length);
     }
 }
